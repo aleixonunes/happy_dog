@@ -8,7 +8,8 @@ import com.example.happydog.databinding.ExpandableChildItemBinding
 import com.example.happydog.databinding.ExpandableParentItemBinding
 import com.example.happydog.utils.*
 
-class BreedsAdapter(private var breedsModelList: ArrayList<ExpandableBreeds> = arrayListOf()) :
+class BreedsAdapter(private var breedsModelList: ArrayList<ExpandableBreeds> = arrayListOf(),
+private val onBreedsClickListener: OnBreedsClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -73,14 +74,13 @@ class BreedsAdapter(private var breedsModelList: ArrayList<ExpandableBreeds> = a
         return breedsModelList.size
     }
 
-    inner class BreedsParentViewHolder(private val binding: ExpandableParentItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
+    inner class BreedsParentViewHolder(private val binding: ExpandableParentItemBinding):
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         lateinit var breedParent: Parent
 
         init {
-
+            binding.breedsName.setOnClickListener(this)
             binding.closeArrow.setOnClickListener {
                 val startPosition = absoluteAdapterPosition + 1
                 val count = breedParent.childItems.size
@@ -110,6 +110,10 @@ class BreedsAdapter(private var breedsModelList: ArrayList<ExpandableBreeds> = a
             binding.closeArrow.rotation = if (breedParent.isExpanded()) 180f else 0f
         }
 
+        override fun onClick(p0: View?) {
+            onBreedsClickListener.onBreedClick(absoluteAdapterPosition)
+        }
+
     }
 
     inner class BreedsChildViewHolder(private val binding: ExpandableChildItemBinding) :
@@ -121,5 +125,9 @@ class BreedsAdapter(private var breedsModelList: ArrayList<ExpandableBreeds> = a
             binding.breedsName.text = breedChild.breedsSubName
         }
 
+    }
+
+    interface OnBreedsClickListener {
+        fun onBreedClick(position: Int)
     }
 }

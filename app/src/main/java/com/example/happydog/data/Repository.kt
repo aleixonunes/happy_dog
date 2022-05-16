@@ -2,6 +2,7 @@ package com.example.happydog.data
 
 import com.example.happydog.data.remote.RemoteDataSource
 import com.example.happydog.model.BaseApiResponse
+import com.example.happydog.model.BreedImageResponse
 import com.example.happydog.model.BreedsResponse
 import com.example.happydog.utils.NetworkResult
 import dagger.hilt.android.scopes.ActivityRetainedScoped
@@ -22,4 +23,9 @@ class Repository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun getBreedsImage(breedName: String): Flow<NetworkResult<BreedImageResponse>> {
+        return flow {
+            emit(safeApiCall { remoteDataSource.getBreedsImage(breedName) })
+        }.flowOn(Dispatchers.IO)
+    }
 }

@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.happydog.databinding.ActivityMainBinding
 import com.example.happydog.model.BreedsResponse
-import com.example.happydog.utils.NetworkResult
+import com.example.happydog.utils.*
 import com.example.happydog.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,7 +54,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleResponse(response: BreedsResponse) {
-        adapter?.setBreedsList(response.message.toList().map { it.first })
+        val list = ArrayList<ExpandableBreeds>()
+        for (breed in response.message) {
+            val listChilds = mutableListOf<Child>()
+            breed.value.forEach{
+                listChilds.add(Child(it))
+            }
+            list.add(Parent(breed.key, listChilds))
+        }
+
+        adapter?.setBreedsList(list)
         Toast.makeText(applicationContext, response.status, Toast.LENGTH_LONG).show()
     }
 

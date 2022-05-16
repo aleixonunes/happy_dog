@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.113" />
+        <entry key="app/src/main/res/drawable/ic_arrow_drop_up.xml" value="0.113" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17281553398058253" />
         <entry key="app/src/main/res/layout/card_view_layout.xml" value="0.18704710144927536" />
+        <entry key="app/src/main/res/layout/expandable_child_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/expandable_parent_item.xml" value="0.22" />
       </map>
     </option>
   </component>

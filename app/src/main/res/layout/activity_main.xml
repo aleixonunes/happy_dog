@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/card_view_layout"
+        tools:listitem="@layout/expandable_parent_item"
         android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,6 @@ interface APIInterface {
     @GET("breeds/list/all")
     suspend fun getDogBreeds(): Response<BreedsResponse>
 
-    @GET("breed/{breedName}/images/random")
+    @GET("breed/{breedName}/images")
     suspend fun getBreedImage(@Path("breedName") breedName: String): Response<BreedImageResponse>
 }

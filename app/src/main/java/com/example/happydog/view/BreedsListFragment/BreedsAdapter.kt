@@ -1,4 +1,4 @@
-package com.example.happydog.view
+package com.example.happydog.view.BreedsListFragment
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,8 @@ import com.example.happydog.databinding.ExpandableParentItemBinding
 import com.example.happydog.utils.*
 
 class BreedsAdapter(private var breedsModelList: ArrayList<ExpandableBreeds> = arrayListOf(),
-private val onBreedsClickListener: OnBreedsClickListener) :
+private val onBreedsClickListener: OnBreedsClickListener
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,9 +42,7 @@ private val onBreedsClickListener: OnBreedsClickListener) :
                     )
                 BreedsParentViewHolder(binding)
             }
-
         }
-
     }
 
     fun setBreedsList(breedsList: ArrayList<ExpandableBreeds>) {
@@ -124,7 +123,6 @@ private val onBreedsClickListener: OnBreedsClickListener) :
         fun bind() {
             binding.breedsName.text = breedChild.breedsSubName
         }
-
     }
 
     interface OnBreedsClickListener {

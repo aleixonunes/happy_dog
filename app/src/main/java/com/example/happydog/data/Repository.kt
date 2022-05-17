@@ -28,4 +28,5 @@ class Repository @Inject constructor(
             emit(safeApiCall { remoteDataSource.getBreedsImage(breedName) })
         }.flowOn(Dispatchers.IO)
     }
+
 }

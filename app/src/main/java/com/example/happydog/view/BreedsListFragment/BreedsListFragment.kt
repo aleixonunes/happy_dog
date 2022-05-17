@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.happydog.R
@@ -20,7 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
-    private lateinit var _binding: FragmentBreedsListBinding
+    private var _binding: FragmentBreedsListBinding? = null
+    private val binding get() = _binding!!
     private val mainViewModel by viewModels<MainViewModel>()
     private var adapter: BreedsAdapter? = null
     private val list : ArrayList<ExpandableBreeds> = arrayListOf()
@@ -33,9 +35,22 @@ class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
         _binding = FragmentBreedsListBinding.inflate(inflater, container, false)
         adapter = BreedsAdapter(onBreedsClickListener = this)
 
-        _binding.breedsRV.adapter = adapter
+        binding.breedsRV.adapter = adapter
         fetchData()
-        return _binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setIcon(R.drawable.ic_launcher_foreground)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        adapter = null
     }
 
     private fun fetchData() {
@@ -52,7 +67,7 @@ class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
                 }
 
                 is NetworkResult.Loading<*> -> {
-                    _binding.loadBreedsPB.visibility = View.VISIBLE
+                    binding.loadBreedsPB.visibility = View.VISIBLE
                 }
             }
         }
@@ -61,10 +76,15 @@ class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
 
     private fun fetchResponse() {
         mainViewModel.fetchBreedsResponse()
-        _binding.loadBreedsPB.visibility = View.VISIBLE
+        binding.loadBreedsPB.visibility = View.VISIBLE
     }
 
     private fun handleResponse(response: BreedsResponse) {
+        adapter?.setBreedsList(getListToAdapter(response))
+        binding.loadBreedsPB.visibility = View.GONE
+    }
+
+    private fun getListToAdapter(response: BreedsResponse): ArrayList<ExpandableBreeds> {
         for (breed in response.message) {
             val listChilds = mutableListOf<Child>()
             breed.value.forEach {
@@ -72,15 +92,13 @@ class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
             }
             list.add(Parent(breed.key, listChilds))
         }
-
-        adapter?.setBreedsList(list)
-        _binding.loadBreedsPB.visibility = View.GONE
+        return list
     }
 
     private fun handleErrorResponse() {
         Toast.makeText(context, "An error occurred. Please try again", Toast.LENGTH_LONG)
             .show()
-        _binding.loadBreedsPB.visibility = View.GONE
+        binding.loadBreedsPB.visibility = View.GONE
     }
 
     override fun onBreedClick(position: Int) {

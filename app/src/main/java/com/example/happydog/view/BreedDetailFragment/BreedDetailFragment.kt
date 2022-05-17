@@ -16,7 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BreedDetailFragment : Fragment() {
 
-    private lateinit var _binding: FragmentBreedDetailBinding
+    private var _binding: FragmentBreedDetailBinding? = null
+    private val binding get() = _binding!!
     private val mainViewModel by viewModels<MainViewModel>()
     private var breedName: String? = ""
     private var adapter: BreedsPicturesAdapter? = null
@@ -35,10 +36,16 @@ class BreedDetailFragment : Fragment() {
     ): View {
         _binding = FragmentBreedDetailBinding.inflate(inflater, container, false)
         adapter = BreedsPicturesAdapter(context = requireContext())
-        _binding.breedsPicRV.adapter = adapter
+        binding.breedsPicRV.adapter = adapter
         fetchData()
 
-        return _binding.root
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter = null
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +55,6 @@ class BreedDetailFragment : Fragment() {
 
     private fun fetchData() {
         fetchResponse()
-
         mainViewModel.responseImages.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success<*> -> {
@@ -56,32 +62,29 @@ class BreedDetailFragment : Fragment() {
                         response.message!!.message.asSequence().shuffled().take(10).toList()
                     )
                 }
-
                 is NetworkResult.Error<*> -> {
                     handleErrorResponse()
                 }
-
                 is NetworkResult.Loading<*> -> {
-                    _binding.loadBreedsPB.visibility = View.VISIBLE
+                    binding.loadBreedsPB.visibility = View.VISIBLE
                 }
             }
         }
-
     }
 
     private fun fetchResponse() {
         mainViewModel.fetchBreedImageResponse(breedName!!)
-        _binding.loadBreedsPB.visibility = View.VISIBLE
+        binding.loadBreedsPB.visibility = View.VISIBLE
     }
 
     private fun handleResponse(breedsImagesUrlList: List<String>) {
         adapter?.setPicturesList(ArrayList(breedsImagesUrlList))
-        _binding.loadBreedsPB.visibility = View.GONE
+        binding.loadBreedsPB.visibility = View.GONE
     }
 
     private fun handleErrorResponse() {
         Toast.makeText(context, "An error occurred. Please try again", Toast.LENGTH_LONG)
             .show()
-        _binding.loadBreedsPB.visibility = View.GONE
+        binding.loadBreedsPB.visibility = View.GONE
     }
 }

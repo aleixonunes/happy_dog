@@ -3,14 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/blue_gradient_background.xml" value="0.1705" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.179" />
+        <entry key="app/src/main/res/drawable/blu.xml" value="0.1705" />
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.113" />
         <entry key="app/src/main/res/drawable/ic_arrow_drop_up.xml" value="0.113" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.179" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.179" />
+        <entry key="app/src/main/res/drawable/white_background_corner.xml" value="0.2495" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17281553398058253" />
         <entry key="app/src/main/res/layout/breed_picture_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/card_view_layout.xml" value="0.18704710144927536" />
-        <entry key="app/src/main/res/layout/expandable_child_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/expandable_child_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/expandable_parent_item.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_breed_detail.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/fragment_breeds_list.xml" value="0.18659420289855072" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.179" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.179" />
       </map>
     </option>
   </component>

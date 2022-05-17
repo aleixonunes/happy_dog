@@ -8,4 +8,8 @@
     <color name="teal_700_transparency">#50018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple_middle">#A58EFD</color>
+    <color name="purple_dark">#8F4AE2</color>
+    <color name="purple_light">#89B4ED</color>
+    <color name="gray">#C6BFDD</color>
 </resources>

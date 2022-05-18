@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.happydog.R
 import com.example.happydog.databinding.FragmentBreedsListBinding
 import com.example.happydog.model.BreedsResponse
@@ -18,6 +20,7 @@ import com.example.happydog.utils.Parent
 import com.example.happydog.view.BreedDetailFragment.BreedDetailFragment
 import com.example.happydog.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
 
 @AndroidEntryPoint
 class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
@@ -49,8 +52,10 @@ class BreedsListFragment : Fragment(), BreedsAdapter.OnBreedsClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        list.clear()
+        mainViewModel.viewModelScope.coroutineContext.cancel()
+        binding.breedsRV.adapter = null
         _binding = null
-        adapter = null
     }
 
     private fun fetchData() {

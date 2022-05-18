@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.example.happydog.databinding.FragmentBreedDetailBinding
 import com.example.happydog.utils.NetworkResult
 import com.example.happydog.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.cancel
 
 @AndroidEntryPoint
 class BreedDetailFragment : Fragment() {
@@ -44,7 +46,8 @@ class BreedDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter = null
+        mainViewModel.viewModelScope.coroutineContext.cancel()
+        binding.breedsPicRV.adapter = null
         _binding = null
     }
 
